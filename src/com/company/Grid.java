@@ -6,14 +6,13 @@ public class Grid {
 
     //Design process:
     // Broad idea: have grid, specify for each instance of the grid: dimensions.
-        //each grid square, grid point
-        //wether obstacle or roboto
-        //How to move robot: concern: tracking the robot
-            //either the grid tracks robot or.. i.e. the robot interacts with the grid
-            //(grid mothership/US-Big-Bird iraq relationship)
+    //each grid square, grid point
+    //wether obstacle or roboto
+    //How to move robot: concern: tracking the robot
+    //either the grid tracks robot or.. i.e. the robot interacts with the grid
+    //(grid mothership/US-Big-Bird iraq relationship)
 
     //input length and width to make a 2d array
-
 
 
     // initialize variables
@@ -33,14 +32,16 @@ public class Grid {
 
         space = new char[height][width];
 
-        for (int i = 0; i < height; i++){
+        for (int i = 0; i < height; i++) {
             trapsThisRow = maxTrapsRow;
-            for (int j = 0; j < width; j++){
-                if(isTrap() && trapsThisRow > 0 && maxTrapsTotal > 0){
+            for (int j = 0; j < width; j++) {
+                if (isTrap() && trapsThisRow > 0 && maxTrapsTotal > 0) {
                     space[i][j] = 'x';
                     trapsThisRow--;
                     maxTrapsTotal--;
-                } else {space[i][j] = '_';}
+                } else {
+                    space[i][j] = '_';
+                }
             }
         }
         space[0][0] = 'R';
@@ -48,30 +49,31 @@ public class Grid {
 
     public void printGrid() {
         // Top boundary
-        for(int i = 0; i < width + 2; i++){
+        for (int i = 0; i < width + 2; i++) {
             System.out.print("#  ");
         }
         System.out.print('\n');
-        for (int i = 0; i < height; i++){
+        for (int i = 0; i < height; i++) {
             // Left boundary
             System.out.print("# ");
-            for (int j = 0; j < width; j++){
-                System.out.printf(" %c ",space[i][j]);
+            for (int j = 0; j < width; j++) {
+                System.out.printf(" %c ", space[i][j]);
             }
             // Right boundary
             System.out.print(" #\n");
         }
         // Bottom boundary
-        for(int i = 0; i < width + 2; i++){
+        for (int i = 0; i < width + 2; i++) {
             System.out.print("#  ");
         }
     }
 
-    public boolean isTrap()
-    {
-        if(Math.random() > 0.65) {return true;}
-        else
-        {return false;}
+    public boolean isTrap() {
+        if (Math.random() > 0.65) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // Use cases for checking for traps
@@ -81,15 +83,29 @@ public class Grid {
     // Tracking robot path
 
     public char lookLeft(int x, int y) {
-        if (x -1 > -1) {
+        if (x - 1 > -1) {
             return space[y][x - 1];
-        } else
-        { return '#';}
+        } else {
+            return '#';
+        }
     }
-    //        R _ _ _
-    //        x x _ _
-    //        _ _ x _
-    //        _ _ x _
+
+    public char lookRight(int x, int y) {
+        if (x + 1 < this.width) {
+            return space[y][x + 1];
+        } else {
+            return '#';
+        }
+    }
+
+    // Done: left, right
+    // Remaining: up, down, up-left, up-right,
+    //  down-left, down-right
+    // Cal: down
+    // Kevin Nguyen: up-left
+    // Andrew: down-left
+    // Allison: down-right
+    // Daniel: up-right
 
     // output space to console
     // System.out.print(space);
