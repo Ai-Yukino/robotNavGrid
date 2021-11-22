@@ -19,6 +19,7 @@ public class Grid {
     // initialize variables
     int width;
     int height;
+    // int traps;
     char[][] space;
 
     //constructor
@@ -26,13 +27,23 @@ public class Grid {
         // initial variables = parameter/"instance" variables
         this.width = width;
         this.height = height;
+        int maxTrapsTotal = (height * width) / 3;
+        int maxTrapsRow = (maxTrapsTotal / height) + 3;
+        int trapsThisRow = maxTrapsRow;
+
         space = new char[height][width];
 
         for (int i = 0; i < height; i++){
+            trapsThisRow = maxTrapsRow;
             for (int j = 0; j < width; j++){
-                space[i][j] = '_';
+                if(isTrap() && trapsThisRow > 0 && maxTrapsTotal > 0){
+                    space[i][j] = 'x';
+                    trapsThisRow--;
+                    maxTrapsTotal--;
+                } else {space[i][j] = '_';}
             }
         }
+        space[0][0] = 'R';
     }
 
     public void printGrid() {
@@ -42,6 +53,13 @@ public class Grid {
             }
             System.out.print('\n');
         }
+    }
+
+    public boolean isTrap()
+    {
+        if(Math.random() > 0.65) {return true;}
+        else
+        {return false;}
     }
     // output space to console
     // System.out.print(space);
