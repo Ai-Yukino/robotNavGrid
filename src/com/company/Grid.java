@@ -21,6 +21,13 @@ public class Grid {
     // int traps;
     char[][] space;
 
+    // Constructor for testing
+    Grid(char[][] testArray) {
+        this.space = testArray;
+        this.height = testArray.length;
+        this.width = testArray[0].length;
+    }
+
     //constructor
     Grid(int height, int width) {
         // initial variables = parameter/"instance" variables
@@ -82,6 +89,18 @@ public class Grid {
     //
     // Tracking robot path
 
+    // Example visualization
+    // 0 1 2 3 4
+    // _ _ _ _ _ 0
+    //  * * _ _ 1
+    // * R * _ _ 2
+    // * * * _ _ 3
+    // _ _ _ _ _ 4
+    // height = 5
+    // width = 5
+    // y -> yth row
+    // x -> xth column
+
     public char lookLeft(int x, int y) {
         if (x - 1 > -1) {
             return space[y][x - 1];
@@ -97,6 +116,55 @@ public class Grid {
             return '#';
         }
     }
+
+    public char lookDown(int x, int y) {
+        if (y + 1 < this.height) {
+            return space[y + 1][x];
+        } else {
+            return '#';
+        }
+    }
+
+    public char lookUp(int x, int y) {
+        if (y - 1 > -1) {
+            return space[y - 1][x];
+        } else {
+            return '#';
+        }
+    }
+
+    public char lookUpRight(int x, int y) {
+        if (x + 1 < this.width && y - 1 > -1) {
+            return space[y - 1][x + 1];
+        } else {
+            return '#';
+        }
+    }
+
+    public char lookUpLeft(int x, int y) {
+        if (x - 1 > -1 && y - 1 > -1) {
+            return space[y - 1][x - 1];
+        } else {
+            return '#';
+        }
+    }
+
+    public char lookDownRight(int x, int y) {
+        if (x + 1 < this.width && y + 1 < this.height) {
+            return space[y + 1][x + 1];
+        } else {
+            return '#';
+        }
+    }
+
+    public char lookDownLeft(int x, int y) {
+        if ((x - 1 > -1) && (y + 1 < height)) {
+            return space[y - 1][x - 1];
+        } else {
+            return '#';
+        }
+    }
+
 
     // Done: left, right
     // Remaining: up, down, up-left, up-right,
