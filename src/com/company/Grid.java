@@ -27,8 +27,8 @@ public class Grid {
         // initial variables = parameter/"instance" variables
         this.width = width;
         this.height = height;
-        int maxTrapsTotal = (height * width) / 3;
-        int maxTrapsRow = (maxTrapsTotal / height) + 3;
+        int maxTrapsTotal = (height * width) / 5;
+        int maxTrapsRow = (maxTrapsTotal / height) + 2;
         int trapsThisRow = maxTrapsRow;
 
         space = new char[height][width];
@@ -47,11 +47,23 @@ public class Grid {
     }
 
     public void printGrid() {
+        // Top boundary
+        for(int i = 0; i < width + 2; i++){
+            System.out.print("#  ");
+        }
+        System.out.print('\n');
         for (int i = 0; i < height; i++){
+            // Left boundary
+            System.out.print("# ");
             for (int j = 0; j < width; j++){
                 System.out.printf(" %c ",space[i][j]);
             }
-            System.out.print('\n');
+            // Right boundary
+            System.out.print(" #\n");
+        }
+        // Bottom boundary
+        for(int i = 0; i < width + 2; i++){
+            System.out.print("#  ");
         }
     }
 
@@ -61,15 +73,29 @@ public class Grid {
         else
         {return false;}
     }
+
+    // Use cases for checking for traps
+    // Assign obstacles without trapping robot
+    // Checking whether robot can move to a space
+    //
+    // Tracking robot path
+
+    public char lookLeft(int x, int y) {
+        if (x -1 > -1) {
+            return space[y][x - 1];
+        } else
+        { return '#';}
+    }
+    //        R _ _ _
+    //        x x _ _
+    //        _ _ x _
+    //        _ _ x _
+
     // output space to console
     // System.out.print(space);
 
     // Robot position: top left
     // Blockage parameter: number of blocks? random obstacles?
-
-
-
-
 
     // movement within = valid and vice versa
 
