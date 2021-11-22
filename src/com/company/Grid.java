@@ -26,24 +26,28 @@ public class Grid {
         // initial variables = parameter/"instance" variables
         this.width = width;
         this.height = height;
-        space = new char[width][height];
+        space = new char[height][width];
 
-        for (int i = 0; i < width; i++){
-            for (int j = 0; j < height; j++){
+        for (int i = 0; i < height; i++){
+            for (int j = 0; j < width; j++){
                 space[i][j] = '_';
             }
         }
     }
 
     public void printGrid() {
-        for (int i = 0; i < width; i++){
-            for (int j = 0; j < height; j++){
-                 = '_';
+        for (int i = 0; i < height; i++){
+            for (int j = 0; j < width; j++){
+                System.out.printf(" %c ",space[i][j]);
             }
+            System.out.print('\n');
         }
     }
-    //output space to console
-    System.out.print(space);
+    // output space to console
+    // System.out.print(space);
+
+    // Robot position: top left
+    // Blockage parameter: number of blocks? random obstacles?
 
 
 

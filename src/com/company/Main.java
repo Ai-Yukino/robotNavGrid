@@ -6,6 +6,8 @@ public class Main {
 	// write your code here
         System.out.println("Robot Project :DDdd");
 
-//        Grid();
+       // (width, height)
+       Grid myGrid = new Grid(10, 7);
+       myGrid.printGrid();
     }
 }
