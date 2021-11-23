@@ -159,12 +159,11 @@ public class Grid {
 
     public char lookDownLeft(int x, int y) {
         if ((x - 1 > -1) && (y + 1 < height)) {
-            return space[y - 1][x - 1];
+            return space[y + 1][x - 1];
         } else {
             return '#';
         }
     }
-
 
     // Done: left, right
     // Remaining: up, down, up-left, up-right,
