@@ -34,7 +34,7 @@ public class Grid {
         this.width = width;
         this.height = height;
         int maxTrapsTotal = (height * width) / 5;
-        int maxTrapsRow = (maxTrapsTotal / height) + 2;
+        int maxTrapsRow = (maxTrapsTotal / height) + 1;
         int trapsThisRow = maxTrapsRow;
 
         space = new char[height][width];
@@ -42,7 +42,7 @@ public class Grid {
         for (int i = 0; i < height; i++) {
             trapsThisRow = maxTrapsRow;
             for (int j = 0; j < width; j++) {
-                if (isTrap() && trapsThisRow > 0 && maxTrapsTotal > 0) {
+                if (layTrap() && trapsThisRow > 0 && maxTrapsTotal > 0) {
                     space[i][j] = 'x';
                     trapsThisRow--;
                     maxTrapsTotal--;
@@ -52,6 +52,37 @@ public class Grid {
             }
         }
         space[0][0] = 'R';
+        space[height - 1][width - 1] = 'O';
+    }
+    
+    // public void harveyDent() {
+    //     boolean coinFlip = Math.random() > 0.5;
+    //     // Current position of robot 'R'
+    //     int x = 0;
+    //     int y = 0;
+    //
+    //     // State machine (0, starting), (1, done),
+    //     // (2, done), (3, none), (4,)
+    //
+    //     // Things which change state:
+    //     // coin flip:
+    //     // true -> prefer right
+    //     // false -> prefer left
+    //
+    //
+    //     if (coinFlip && (lookRight(x, y) != 'x') || lookRight(x, y) != '#') {
+    //     }
+    //
+    //     if (!coinFlip && (lookDown(x, y) != 'x') || lookDown(x, y) != '#') {
+    //     }
+    // }
+    //
+    // public boolean isTrap(int x, int y) {
+    //     return space[y][x] == 'x';
+    // }
+
+    public void markPath(int x, int y) {
+        space[y][x] = '*';
     }
 
     public void printGrid() {
@@ -75,7 +106,7 @@ public class Grid {
         }
     }
 
-    public boolean isTrap() {
+    public boolean layTrap() {
         if (Math.random() > 0.65) {
             return true;
         } else {
@@ -164,6 +195,7 @@ public class Grid {
             return '#';
         }
     }
+
 
     // Done: left, right
     // Remaining: up, down, up-left, up-right,
