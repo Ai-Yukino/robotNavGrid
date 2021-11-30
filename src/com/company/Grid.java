@@ -21,8 +21,20 @@ public class Grid {
     // int traps;
     char[][] space;
 
+    // current cursor coordinates
+    int curX;
+    int curY;
+
+    // current direction in path search
+    int curDir;
+
+    // Top of the switch point linked list,
+    // i.e. the last switch point added
+    SwitchPoint peak;
+
     // Constructor for testing
-    Grid(char[][] testArray) {
+    Grid(
+            char[][] testArray) {
         this.space = testArray;
         this.height = testArray.length;
         this.width = testArray[0].length;
@@ -36,6 +48,7 @@ public class Grid {
         int maxTrapsTotal = (height * width) / 5;
         int maxTrapsRow = (maxTrapsTotal / height) + 1;
         int trapsThisRow = maxTrapsRow;
+        peak = null;
 
         space = new char[height][width];
 
@@ -54,7 +67,114 @@ public class Grid {
         space[0][0] = 'R';
         space[height - 1][width - 1] = 'O';
     }
-    
+
+    // Set bombs in specific locations
+    // Grid(int h, int w, int... x) {
+    //     width = w;
+    //     height = h;
+    //     space = new char[height][width];
+    //     peak = null;
+    //
+    //     // Fill entire grid with '_'
+    //     for (int i = 0; i < height; i++) {
+    //         for (int j = 0; j < width; j++) {
+    //             space[i][j] = '_';
+    //         }
+    //     }
+    //
+    //     // Set bombs
+    //     if (x.length % 2 == 0) {
+    //         int j = 0;
+    //         for (int i : x) {
+    //             j++;
+    //             if (j % 2 == 1) {
+    //                 space[i][i + 1] = 'x';
+    //             }
+    //         }
+    //     }
+    //
+    //     // Set robot 'R' and goal 'O'
+    //     space[0][0] = 'R';
+    //     space[height - 1][width - 1] = 'O';
+    //
+    // }
+
+    public boolean findPath() {
+        boolean hasPath = false;
+
+        peak = new SwitchPoint(1, height - 1, width - 1);
+        peak.previous = null;
+
+        boolean keepGoing = true;
+        curX = peak.column;
+        curY = peak.row;
+        curDir = 1;
+
+        trackLeft();
+        if (curX == peak.column) {
+            // Move switch point to the right
+            SwitchPoint previousPeak = peak;
+            peak = new SwitchPoint(0, curX, curY);
+        }
+
+        // Mark switch point
+        SwitchPoint previousPeak = peak;
+        peak = new SwitchPoint(curDir, curX, curY);
+
+        // Going as far left as possible
+        // while (keepGoing) {
+        //     if (lookLeft(x, y) != '_') {
+        //         keepGoing = false;
+        //     } else {
+        //         x--;
+        //     }
+        // }
+
+        // Going as far up as possible
+        // keepGoing = true;
+        // while (keepGoing) {
+        //     if (lookUp(x, y) != '_') {
+        //         keepGoing = false;
+        //     } else {
+        //         y--;
+        //     }
+        // }
+
+        return hasPath;
+    }
+
+    public void trackLeft() {
+        boolean keepGoing = true;
+        while (keepGoing) {
+            if (lookLeft(curX, curY) != '_') {
+                keepGoing = false;
+            } else {
+                curX--;
+            }
+        }
+    }
+
+    public void trackUp() {
+        boolean keepGoing = true;
+        while (keepGoing) {
+            if (lookUp(curX, curY) != '_') {
+                keepGoing = false;
+            } else {
+                curY--;
+            }
+        }
+    }
+
+    // Change switch point
+    public void changeSwitchPoint() {
+    }
+
+    // if (curX == peak.column) {
+    //     // Move switch point to the right
+    //     SwitchPoint previousPeak = peak;
+    //     peak = new SwitchPoint(0, curX, curY);
+    // }
+
     // public void harveyDent() {
     //     boolean coinFlip = Math.random() > 0.5;
     //     // Current position of robot 'R'
