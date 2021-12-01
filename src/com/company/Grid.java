@@ -315,7 +315,95 @@ public class Grid {
             return '#';
         }
     }
+    boolean otherOpen(){
+        if (peak.direction == 0) {
+            char nextSpace = lookLeft(peak.row, peak.column);
+        } else {
+            char nextSpace = lookUp(peak.row, peak.column);
+        }
+        return (nextSpace == '_');
+    }
 
+    boolean outOfBounds(){
+        boolean condHeight = peak.row >= height;
+        boolean condWidth = peak.column >= width;
+        return condHeight || condWidth;
+    }
+
+    boolean pastPrevSwitchPoint(){
+        if (peak == null || peakPrev == null) {
+            return false;
+        }
+        if (peak.direction == 0) {
+            return (peak.row > peakPrev.row);
+        } else {
+            return (peak.column > peakPrev.column);
+        }
+    }
+
+    void incrementSwitchPoint(){
+        if (peak.direction == 0) {
+            peak.setRow() = peak.row + 1;
+        } else {
+            peak.setColumn() = peak.column + 1;
+        }
+    }
+
+    void removeSwitchPoint(){
+        space[curX][curY] = 'v';
+        peak = prevPeak;
+    }
+
+    void runTrack(){
+        if (peak.direction == 1){
+            trackLeft();
+        } else {
+            trackUp();
+        }
+    }
+
+    void findPath(){
+        peak = new SwitchPoint(1, height-1, width-1);
+        peak.previous = null;
+        peakPrev = null;
+        curX = peak.column;
+        curY = peak.row;
+
+        boolean pathFound = false;
+        boolean gameOver = false;
+        boolean adjustPeak = true;
+
+        mainLoop:
+        while(gameOver == false){
+            runTrack();
+            if (curX == 0 && curY == 0){
+                pathFound = true;
+                gameOver = true;
+                break mainLoop;
+            }
+
+            adjustmentLoop:
+            while(adjustPeak){
+                if (otherOpen()){
+                    int new_direction = (peak.direction == 0) ? 1 : 0;
+                    prevPeak = peak;
+                    peak = new SwitchPoint(new_direction, curY, curX);
+                    peak.previous = prevPeak;
+                    adjustPeak = false;
+                } else {
+                    incrementSwitchPoint();
+                    if (outOfBounds() || pastPrevSwitchPoint(){
+                        removeSwitchPoint();
+                        if (peak == null) {
+                            gameOver = true;
+                            break mainLoop;
+                        }
+                    }
+                }
+            }    //end adjustmentLoop
+        } // end MainLoop
+
+    }
 
     // Done: left, right
     // Remaining: up, down, up-left, up-right,
